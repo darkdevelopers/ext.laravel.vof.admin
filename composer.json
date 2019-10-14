@@ -1,0 +1,30 @@
+{
+    "name": "vof/ext.laravel.vof.admin",
+    "description": "This is a libary for creating a new Admin Backend..",
+    "type": "library",
+    "license": "PRIVATE",
+    "authors": [
+        {
+            "name": "Marco Schauer",
+            "email": "marco.schauer@darkdevelopers.de"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Vof\\Admin\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vof\\Admin\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vof\\Admin\\AdminServiceProvider"
+            ]
+        }
+    }
+}
