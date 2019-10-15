@@ -12,6 +12,6 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        ADMIN START
+        @yield('content')
     </body>
 </html>
