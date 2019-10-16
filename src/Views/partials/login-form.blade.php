@@ -4,7 +4,8 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">@lang('admin::login.default.login-headline')</h5>
-                    <form class="form-signin">
+                    {!! Form::open(array('url' => 'admin/login', 'class' => 'form-signin')) !!}
+                        {!! Form::hidden('_method', 'POST') !!}
                         <div class="form-label-group">
                             <input type="email" id="inputEmail" class="form-control" placeholder="@lang('admin::login.default.placeholder.email')" required autofocus>
                             <label for="inputEmail">@lang('admin::login.placeholder.email')</label>
@@ -20,7 +21,8 @@
                             <label class="custom-control-label" for="rememberPassword">@lang('admin::login.default.remember-password')</label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">@lang('admin::login.default.btn-sign-in')</button>
-                    </form>
+                        {!! Form::button(trans('admin::login.default.btn-sign-in'), array('class' => 'btn btn-lg btn-primary btn-block text-uppercase','type' => 'button')) !!}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
