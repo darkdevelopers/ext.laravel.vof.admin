@@ -1,5 +1,5 @@
 @extends('admin::layouts.admin-layout-login')
 
 @section('content')
-    <p>dummy</p>
+    @include('admin::partials.login-form')
 @endsection()
