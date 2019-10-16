@@ -20,7 +20,6 @@
                             <input type="checkbox" class="custom-control-input" id="rememberPassword">
                             <label class="custom-control-label" for="rememberPassword">@lang('admin::login.default.remember-password')</label>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">@lang('admin::login.default.btn-sign-in')</button>
                         {!! Form::button(trans('admin::login.default.btn-sign-in'), array('class' => 'btn btn-lg btn-primary btn-block text-uppercase','type' => 'button')) !!}
                     {!! Form::close() !!}
                 </div>
