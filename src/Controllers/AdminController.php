@@ -8,10 +8,23 @@ namespace Vof\Admin\Controllers;
 
 use Illuminate\Routing\Controller;
 
+/**
+ * Class AdminController
+ * @package Vof\Admin\Controllers
+ */
 class AdminController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('admin::index');
+    }
+
+    public function login()
+    {
+
+        return null;
     }
 }
