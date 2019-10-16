@@ -18,6 +18,9 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/Views', 'admin');
+        $this->publishes([
+            __DIR__.'/assets/css' => public_path('css/vof.admin'),
+        ], 'ext.laravel.vof.admin');
     }
 
     public function register()
