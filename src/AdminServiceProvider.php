@@ -6,6 +6,7 @@
 
 namespace Vof\Admin;
 
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use Illuminate\Support\ServiceProvider;
 
 /**
