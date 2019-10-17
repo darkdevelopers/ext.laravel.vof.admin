@@ -4,17 +4,10 @@
  * @copyright  2019 Marco Schauer
  */
 
-namespace Vof\Admin\database\AdminFactory;
-
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Vof\Admin\Models\Admin;
 use Faker\Generator as Faker;
-use Faker\Factory as Factory;
 use Illuminate\Support\Facades\Hash;
-
-$factory = \Illuminate\Database\Eloquent\Factory::construct(
-    Factory::create(),
-    dirname(__DIR__).'factories'
-);
 
 $factory->define(Admin::class, function (Faker $faker) {
     return [

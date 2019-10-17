@@ -6,7 +6,9 @@
 
 namespace Vof\Admin\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class AdminController
@@ -22,9 +24,13 @@ class AdminController extends Controller
         return view('admin::index');
     }
 
-    public function login()
+    /**
+     * @param Request $request
+     * @return |null
+     */
+    public function login(Request $request)
     {
-
-        return null;
+        var_dump('login');
+        return;
     }
 }

@@ -6,5 +6,5 @@
 
 Route::group(['middleware' => ['web'], 'namespace' => 'Vof\Admin\Controllers'], function () {
     Route::get('/admin', 'AdminController@index')->name('admin');
-    Route::post('/admin/login', 'AdminController@login')->name('admin-login');
+    Route::post('/admin', 'AdminController@login')->name('admin-login');
 });
