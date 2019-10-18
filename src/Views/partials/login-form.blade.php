@@ -7,17 +7,17 @@
                     {!! Form::open(array('url' => '/admin', 'class' => 'form-signin')) !!}
                         {!! Form::hidden('_method', 'POST') !!}
                         <div class="form-label-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="@lang('admin::login.default.placeholder.email')" required autofocus>
-                            <label for="inputEmail">@lang('admin::login.placeholder.email')</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="@lang('admin::login.default.placeholder.email')" value="{{ old('email') }}" required autofocus>
+                            <label for="email">@lang('admin::login.placeholder.email')</label>
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="@lang('admin::login.default.placeholder.password')" required>
-                            <label for="inputPassword">@lang('admin::login.placeholder.password')</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="@lang('admin::login.default.placeholder.password')" required>
+                            <label for="password">@lang('admin::login.placeholder.password')</label>
                         </div>
 
                         <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" id="rememberPassword">
+                            <input type="checkbox" class="custom-control-input" id="rememberPassword" name="rememberPassword" @if(old('rememberPassword') === 'on') checked @endif>
                             <label class="custom-control-label" for="rememberPassword">@lang('admin::login.default.remember-password')</label>
                         </div>
                         {!! Form::button(trans('admin::login.default.btn-sign-in'), array('class' => 'btn btn-lg btn-primary btn-block text-uppercase','type' => 'submit')) !!}

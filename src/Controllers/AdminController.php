@@ -25,20 +25,12 @@ class AdminController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        return view('admin::index');
-    }
-
-    /**
      * @param Request $request
      * @return |null
      */
-    public function login(Request $request)
+    public function index(Request $request)
     {
-        var_dump('login');
+        var_dump('HOME');
         return;
     }
 }

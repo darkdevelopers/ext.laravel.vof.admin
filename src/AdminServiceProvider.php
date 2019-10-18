@@ -24,12 +24,15 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/assets/css' => public_path('css/vof.admin'),
         ], 'ext.laravel.vof.admin');
+        $this->publishes([
+            __DIR__.'/config' => config_path(),
+        ], 'ext.laravel.vof.admin');
+        $this->publishes([
+            __DIR__.'/database/migrations' => database_path('migrations'),
+        ], 'ext.laravel.vof.admin');
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/guards.php', 'auth.guards');
-        $this->mergeConfigFrom(__DIR__ . '/config/providers.php', 'auth.providers');
-        $this->mergeConfigFrom(__DIR__ . '/config/passwords.php', 'auth.passwords');
     }
 }
