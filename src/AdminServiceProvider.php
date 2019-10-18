@@ -28,5 +28,8 @@ class AdminServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/config/guards.php', 'auth.guards');
+        $this->mergeConfigFrom(__DIR__ . '/config/providers.php', 'auth.providers');
+        $this->mergeConfigFrom(__DIR__ . '/config/passwords.php', 'auth.passwords');
     }
 }
