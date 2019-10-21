@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class AdminLoginController extends Controller
 {
@@ -58,6 +59,7 @@ class AdminLoginController extends Controller
             return redirect()->intended(route('admin-home'));
         }
         //if unsuccessfull redirect back to the login for with form data
-        return redirect()->back()->withInput($request->only('email','rememberPassword'));
+
+        return redirect()->back()->withErrors(['email' => ['message' => __('admin::login.default.credentials-wrong')]])->withInput($request->only('email','rememberPassword'));
     }
 }

@@ -101,7 +101,6 @@ class LoginTest extends TestCase
     public function testAdminLogin(): void
     {
         $this->startSession();
-        var_dump($this->app['session']->token());
 
         /** @var Admin $admin */
         $admin = factory(Admin::class)->create();
@@ -110,13 +109,14 @@ class LoginTest extends TestCase
         $this->baseUrl = "http://vof.local";
         $response = $this->post('/admin', [
             'email' => $admin->email,
-            'password' => 'secret'
+            'password' => 'secret',
+            '_token' => $this->app['session']->token(),
         ], [
             'content-type' => 'multipart/form-data',
-            'X-XSRF-TOKEN' => $this->app['session']->token(),
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(302);
+        $response->assertRedirect('/admin/dashboard');
         $this->flushSession();
     }
 }

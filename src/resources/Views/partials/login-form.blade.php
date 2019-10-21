@@ -7,13 +7,23 @@
                     {!! Form::open(array('url' => '/admin', 'class' => 'form-signin')) !!}
                         {!! Form::hidden('_method', 'POST') !!}
                         <div class="form-label-group">
-                            <input type="email" id="email" name="email" class="form-control" placeholder="@lang('admin::login.default.placeholder.email')" value="{{ old('email') }}" required autofocus>
+                            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="@lang('admin::login.default.placeholder.email')" value="{{ old('email') }}" required autofocus>
                             <label for="email">@lang('admin::login.placeholder.email')</label>
+                            @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" id="password" name="password" class="form-control" placeholder="@lang('admin::login.default.placeholder.password')" required>
+                            <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="@lang('admin::login.default.placeholder.password')" minlength="6" required>
                             <label for="password">@lang('admin::login.placeholder.password')</label>
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
 
                         <div class="custom-control custom-checkbox mb-3">
