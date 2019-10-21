@@ -4,7 +4,7 @@
  * @copyright  2019 Marco Schauer
  */
 
-namespace Vof\Admin\Http\Middleware;
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

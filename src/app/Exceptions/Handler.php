@@ -4,7 +4,7 @@
  * @copyright  2019 Marco Schauer
  */
 
-namespace Vof\Admin\Exceptions;
+namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
