@@ -4,7 +4,7 @@
  * @copyright  2019 Marco Schauer
  */
 
-namespace Vof\Admin\Controllers;
+namespace Vof\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -21,7 +21,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware(['web', 'auth:admin']);
     }
 
     /**
@@ -31,6 +31,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         var_dump('HOME');
+        exit();
         return;
     }
 }

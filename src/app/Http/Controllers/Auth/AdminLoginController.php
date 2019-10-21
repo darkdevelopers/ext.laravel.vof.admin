@@ -4,7 +4,7 @@
  * @copyright  2019 Marco Schauer
  */
 
-namespace Vof\Admin\Controllers\Auth;
+namespace Vof\Admin\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,6 +13,20 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
+    use AuthenticatesUsers;
+
+    protected $redirectTo = '/admin/dashboard';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['web', 'guest:admin'])->except('logout');
+    }
+
     /**
      * Show the application’s login form.
      *
@@ -28,8 +42,16 @@ class AdminLoginController extends Controller
         //validate the form data
         $this->validate($request,[
             'email' => 'required|email',
-            'password' => 'required|min:8'
+            'password' => 'required|min:6'
         ]);
+
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
         //attempt to login the admins in
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
             //if successful redirect to admin dashboard
@@ -37,31 +59,5 @@ class AdminLoginController extends Controller
         }
         //if unsuccessfull redirect back to the login for with form data
         return redirect()->back()->withInput($request->only('email','rememberPassword'));
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function guard()
-    {
-        return Auth::guard('admin');
-    }
-
-    use AuthenticatesUsers;
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/admin/dashboard';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest:admin')->except('logout');
     }
 }

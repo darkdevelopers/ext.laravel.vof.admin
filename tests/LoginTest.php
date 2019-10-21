@@ -8,7 +8,6 @@ namespace Vof\Admin\Test;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase;
 use Vof\Admin\AdminFacade;
