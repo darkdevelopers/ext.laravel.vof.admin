@@ -4,8 +4,8 @@
     <title>Dashboard | VOF Admin</title>
 @endsection()
 
-@section('topbar')
-    @include('admin::partials.topbar')
+@section('sidebar')
+    @include('admin::partials.sidebar')
 @endsection()
 
 @section('content')
