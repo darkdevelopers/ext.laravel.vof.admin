@@ -25,6 +25,9 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__.'/assets/css' => public_path('css/vof.admin'),
         ], 'ext.laravel.vof.admin');
         $this->publishes([
+            __DIR__.'/assets/js' => public_path('js/vof.admin'),
+        ], 'ext.laravel.vof.admin');
+        $this->publishes([
             __DIR__.'/config' => config_path(),
         ], 'ext.laravel.vof.admin');
         $this->publishes([
