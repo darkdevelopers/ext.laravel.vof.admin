@@ -18,10 +18,16 @@
     @yield('title')
 </head>
 <body>
-<div id="app">
-    @yield('sidebar')
-    @yield('topbar')
-    @yield('content')
-</div>
+    <div id="app">
+        <div class="page-wrapper chiller-theme toggled">
+            @yield('sidebar')
+            <!-- sidebar-wrapper  -->
+            <main class="page-content">
+                <div class="container-fluid">
+                    @yield('content')
+                </div>
+            </main>
+        </div>
+    </div>
 </body>
 </html>

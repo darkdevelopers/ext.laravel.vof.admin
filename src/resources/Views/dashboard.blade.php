@@ -9,7 +9,9 @@
 @endsection()
 
 @section('content')
-    <div class="container">
-    dummy
-    </div>
+    <h2>
+        @lang('admin::admin.dashboard.welcome-user', ['user' => Auth::guard('admin')->user()->name])
+    </h2>
+    <hr>
+    <span>Under Construction</span>
 @endsection()
