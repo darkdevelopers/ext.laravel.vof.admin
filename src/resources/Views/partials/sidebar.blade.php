@@ -83,6 +83,12 @@
                         <span>@lang('admin::admin.sidebar.menu.menu-vouchers')</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-dollar-sign"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-payments')</span>
+                    </a>
+                </li>
                 <li class="header-menu">
                     <span>@lang('admin::admin.sidebar.extras')</span>
                 </li>

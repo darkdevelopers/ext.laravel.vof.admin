@@ -18,6 +18,7 @@ return [
             'menu-products' => 'Products',
             'menu-vouchers' => 'Vouchers',
             'menu-usermanagment' => 'Usermanagment',
+            'menu-payments' => 'Payments'
         ]
     ],
     'dashboard' => [
