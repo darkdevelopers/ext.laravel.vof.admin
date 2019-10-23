@@ -30,8 +30,6 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        var_dump('HOME');
-        exit();
-        return;
+        return view('admin::dashboard');
     }
 }
