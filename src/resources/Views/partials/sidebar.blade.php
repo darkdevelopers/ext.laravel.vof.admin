@@ -32,6 +32,15 @@
         <div class="sidebar-menu">
             <ul>
                 <li class="header-menu">
+                    <span>@lang('admin::admin.sidebar.admin')</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-usermanagment')</span>
+                    </a>
+                </li>
+                <li class="header-menu">
                     <span>@lang('admin::admin.sidebar.general')</span>
                 </li>
                 <li>
@@ -41,38 +50,44 @@
                         <span class="badge badge-pill badge-warning">New</span>
                     </a>
                 </li>
-                <li class="sidebar-dropdown">
-                    <a href="#">
-                        <i class="fa fa-file"></i>
-                        <span>CMS</span>
-                        <span class="badge badge-pill badge-warning">New</span>
-                    </a>
-                    <div class="sidebar-submenu">
-                        <ul>
-                            <li>
-                                <a href="#">@lang('admin::admin.sidebar.menu.menu-cms-overview')</a>
-                            </li>
-                            <li>
-                                <a href="#">@lang('admin::admin.sidebar.menu.menu-cms-create-page')</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
                 <li class="header-menu">
                     <span>@lang('admin::admin.sidebar.shop')</span>
                 </li>
                 <li>
                     <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-customers')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
                         <i class="fa fa-shopping-cart"></i>
                         <span>@lang('admin::admin.sidebar.menu.menu-orders')</span>
-                        <span class="badge badge-pill badge-warning">Hot</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-file-alt"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-invoices')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-archive"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-products')</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-percent"></i>
+                        <span>@lang('admin::admin.sidebar.menu.menu-vouchers')</span>
                     </a>
                 </li>
                 <li class="header-menu">
                     <span>@lang('admin::admin.sidebar.extras')</span>
                 </li>
                 <li>
-                    <a href="/admin/docs">
+                    <a href="/admin/docs" target="_blank">
                         <i class="fa fa-book"></i>
                         <span>@lang('admin::admin.sidebar.menu.menu-documentation')</span>
                         <span class="badge badge-pill badge-primary">Beta</span>
