@@ -45,7 +45,7 @@
                     <span>@lang('admin::admin.sidebar.extras')</span>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/admin/docs">
                         <i class="fa fa-book"></i>
                         <span>@lang('admin::admin.sidebar.menu.menu-documentation')</span>
                         <span class="badge badge-pill badge-primary">Beta</span>
