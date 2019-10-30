@@ -117,6 +117,8 @@ class LoginTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect('/admin/dashboard');
+        $response = $this->get('/admin/dashboard');
+        $response->assertStatus(200);
         $this->flushSession();
     }
 }
