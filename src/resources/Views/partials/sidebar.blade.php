@@ -35,7 +35,7 @@
                     <span>@lang('admin::admin.sidebar.admin')</span>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('usermanagement') }}">
                         <i class="fa fa-users"></i>
                         <span>@lang('admin::admin.sidebar.menu.menu-usermanagment')</span>
                     </a>
