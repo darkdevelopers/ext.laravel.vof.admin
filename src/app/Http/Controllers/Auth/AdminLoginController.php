@@ -9,7 +9,10 @@ namespace Vof\Admin\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Validation\ValidationException;
 use Validator;
 
 class AdminLoginController extends Controller
@@ -45,7 +48,6 @@ class AdminLoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6'
         ]);
-
         if (method_exists($this, 'hasTooManyLoginAttempts') &&
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
@@ -55,11 +57,53 @@ class AdminLoginController extends Controller
 
         //attempt to login the admins in
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)){
+            $this->clearLoginAttempts($request);
             //if successful redirect to admin dashboard
             return redirect()->intended(route('admin-home'));
         }
-        //if unsuccessfull redirect back to the login for with form data
 
-        return redirect()->back()->withErrors(['email' => ['message' => __('admin::login.default.credentials-wrong')]])->withInput($request->only('email','rememberPassword'));
+        $this->incrementLoginAttempts($request);
+
+        //if unsuccessfull redirect back to the login for with form data
+        return redirect( )->back()->withErrors(['email' => ['message' => __('admin::login.default.credentials-wrong')]])->withInput($request->only('email','rememberPassword'));
+    }
+
+    /**
+     * Determine if the user has too many failed login attempts.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function hasTooManyLoginAttempts(Request $request)
+    {
+        $attempts = 1;
+        $lockoutMinites = 10;
+        return $this->limiter()->tooManyAttempts(
+            $this->throttleKey($request), $attempts, $lockoutMinites
+        );
+    }
+
+    /**
+     * Redirect the user after determining they are locked out.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendLockoutResponse(Request $request)
+    {
+        $seconds = $this->limiter()->availableIn(
+            $this->throttleKey($request)
+        );
+
+        /*throw ValidationException::withMessages([
+            $this->username() => [Lang::get('auth.throttle', [
+                'seconds' => $seconds,
+                'minutes' => ceil($seconds / 60),
+            ])],
+        ])->status(Response::HTTP_TOO_MANY_REQUESTS);*/
+
+        return redirect(route('admin-home'), 429)->withErrors(['email' => ['message' => __('admin::login.default.too-many-login-attempts', ['seconds' => $seconds])]])->withInput($request->only('email','rememberPassword'));
     }
 }

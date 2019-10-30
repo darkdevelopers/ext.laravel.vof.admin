@@ -177,4 +177,35 @@ class LoginTest extends TestCase
         $response->assertStatus(302);
         $this->flushSession();
     }
+
+    public function testHasManyLogins()
+    {
+        $this->startSession();
+
+        /** @var Admin $admin */
+        $admin = factory(Admin::class)->create();
+
+        /** @var string baseUrl */
+        $this->baseUrl = "http://vof.local";
+
+        for($i = 0; $i < 10; $i++){
+            $response = $this->post('/admin', [
+                'email' => $admin->email,
+                'password' => 'secfret',
+                '_token' => $this->app['session']->token(),
+            ], [
+                'content-type' => 'multipart/form-data',
+            ]);
+        }
+        $response = $this->post('/admin', [
+            'email' => $admin->femail,
+            'password' => 'secrdet',
+            '_token' => $this->app['session']->token(),
+        ], [
+            'content-type' => 'multipart/form-data',
+        ]);
+
+        $response->assertStatus(429);
+        $this->flushSession();
+    }
 }
