@@ -6,6 +6,7 @@
 
 namespace Vof\Admin\Test;
 
+use App\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,6 +28,7 @@ class LoginTest extends TestCase
         parent::setUp();
         $this->withFactories(__DIR__ . '/../src/database/factories');
         $this->loadMigrationsFrom(__DIR__ . '/../src/database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../../database/migrations/2014_10_12_000000_create_users_table.php');
     }
 
     /**
@@ -119,6 +121,60 @@ class LoginTest extends TestCase
         $response->assertRedirect('/admin/dashboard');
         $response = $this->get('/admin/dashboard');
         $response->assertStatus(200);
+        $this->flushSession();
+    }
+
+    /**
+     * @test
+     */
+    public function testAdminLoginError()
+    {
+        $this->startSession();
+
+        /** @var Admin $admin */
+        $admin = factory(Admin::class)->create();
+
+        /** @var string baseUrl */
+        $this->baseUrl = "http://vof.local";
+        $response = $this->post('/admin', [
+            'email' => $admin->email,
+            'password' => 'dumy',
+            '_token' => $this->app['session']->token(),
+        ], [
+            'content-type' => 'multipart/form-data',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+        $response = $this->get('/admin/dashboard');
+        $response->assertStatus(302);
+        $this->flushSession();
+    }
+
+    /**
+     * @test
+     */
+    public function testAdminLoginWithUserCredentials()
+    {
+        $this->startSession();
+
+        /** @var User $admin */
+        $user = factory(User::class)->create();
+
+        /** @var string baseUrl */
+        $this->baseUrl = "http://vof.local";
+        $response = $this->post('/admin', [
+            'email' => $user->email,
+            'password' => 'password',
+            '_token' => $this->app['session']->token(),
+        ], [
+            'content-type' => 'multipart/form-data',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertRedirect('/');
+        $response = $this->get('/admin/dashboard');
+        $response->assertStatus(302);
         $this->flushSession();
     }
 }
