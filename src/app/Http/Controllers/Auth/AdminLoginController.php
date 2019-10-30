@@ -96,14 +96,7 @@ class AdminLoginController extends Controller
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
-
-        /*throw ValidationException::withMessages([
-            $this->username() => [Lang::get('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ])],
-        ])->status(Response::HTTP_TOO_MANY_REQUESTS);*/
-
+        
         return redirect(route('admin-home'), 429)->withErrors(['email' => ['message' => __('admin::login.default.too-many-login-attempts', ['seconds' => $seconds])]])->withInput($request->only('email','rememberPassword'));
     }
 }

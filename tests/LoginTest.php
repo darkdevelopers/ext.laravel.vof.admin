@@ -188,7 +188,7 @@ class LoginTest extends TestCase
         /** @var string baseUrl */
         $this->baseUrl = "http://vof.local";
 
-        for($i = 0; $i < 10; $i++){
+        for($i = 0; $i < 3; $i++){
             $response = $this->post('/admin', [
                 'email' => $admin->email,
                 'password' => 'secfret',
@@ -198,8 +198,8 @@ class LoginTest extends TestCase
             ]);
         }
         $response = $this->post('/admin', [
-            'email' => $admin->femail,
-            'password' => 'secrdet',
+            'email' => $admin->email,
+            'password' => 'secfret',
             '_token' => $this->app['session']->token(),
         ], [
             'content-type' => 'multipart/form-data',
