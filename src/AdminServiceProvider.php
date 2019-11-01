@@ -38,7 +38,7 @@ class AdminServiceProvider extends ServiceProvider
         ], 'ext.laravel.vof.admin');
         $this->publishes([
             __DIR__.'/app/Http/Middleware' => app_path('Http/Middleware'),
-        ], 'ext.laravel.vof.admin');
+         ], 'ext.laravel.vof.admin');
     }
 
     public function register()

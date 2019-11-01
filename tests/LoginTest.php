@@ -9,6 +9,7 @@ namespace Vof\Admin\Test;
 use App\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Foundation\Testing\WithFaker;
 use Orchestra\Testbench\TestCase;
 use Vof\Admin\AdminFacade;
@@ -29,6 +30,8 @@ class LoginTest extends TestCase
         $this->withFactories(__DIR__ . '/../src/database/factories');
         $this->loadMigrationsFrom(__DIR__ . '/../src/database/migrations');
         $this->loadMigrationsFrom(__DIR__ . '/../../../../database/migrations/2014_10_12_000000_create_users_table.php');
+        /** @var string baseUrl */
+        $this->baseUrl = "http://vof.local";
     }
 
     /**
@@ -75,8 +78,7 @@ class LoginTest extends TestCase
     {
         $this->startSession();
 
-        /** @var string baseUrl */
-        $this->baseUrl = "http://vof.local";
+        /** @var TestResponse $response */
         $response = $this->get('/admin');
 
         $response->assertStatus(200);
@@ -96,19 +98,19 @@ class LoginTest extends TestCase
             'password' => $admin->password
         ]);
     }
-
     /**
      * @test
      */
-    public function testAdminLogin(): void
+    public function testAdminLoginSuccessfully(): void
     {
         $this->startSession();
 
         /** @var Admin $admin */
         $admin = factory(Admin::class)->create();
 
-        /** @var string baseUrl */
-        $this->baseUrl = "http://vof.local";
+        $this->app['session']->setPreviousUrl('/admin');
+
+        /** @var TestResponse $response */
         $response = $this->post('/admin', [
             'email' => $admin->email,
             'password' => 'secret',
@@ -116,79 +118,51 @@ class LoginTest extends TestCase
         ], [
             'content-type' => 'multipart/form-data',
         ]);
+        $response = $this->followRedirects($response);
 
-        $response->assertStatus(302);
-        $response->assertRedirect('/admin/dashboard');
-        $response = $this->get('/admin/dashboard');
         $response->assertStatus(200);
+        $response->assertSee(__('admin::admin.dashboard.welcome-user', ['user' => $admin->name]));
+
         $this->flushSession();
     }
 
     /**
      * @test
      */
-    public function testAdminLoginError()
+    public function testAdminUnauthorised(): void
     {
         $this->startSession();
 
         /** @var Admin $admin */
         $admin = factory(Admin::class)->create();
 
-        /** @var string baseUrl */
-        $this->baseUrl = "http://vof.local";
+        $this->app['session']->setPreviousUrl('/admin');
+
+        /** @var TestResponse $response */
         $response = $this->post('/admin', [
             'email' => $admin->email,
-            'password' => 'dumy',
+            'password' => $admin->password,
             '_token' => $this->app['session']->token(),
         ], [
             'content-type' => 'multipart/form-data',
         ]);
+        $response = $this->followRedirects($response);
 
-        $response->assertStatus(302);
-        $response->assertRedirect('/');
-        $response = $this->get('/admin/dashboard');
-        $response->assertStatus(302);
-        $this->flushSession();
-    }
+        $response->assertStatus(200);
+        $response->assertSee(__('admin::login.default.credentials-wrong'));
 
-    /**
-     * @test
-     */
-    public function testAdminLoginWithUserCredentials()
-    {
-        $this->startSession();
-
-        /** @var User $admin */
-        $user = factory(User::class)->create();
-
-        /** @var string baseUrl */
-        $this->baseUrl = "http://vof.local";
-        $response = $this->post('/admin', [
-            'email' => $user->email,
-            'password' => 'password',
-            '_token' => $this->app['session']->token(),
-        ], [
-            'content-type' => 'multipart/form-data',
-        ]);
-
-        $response->assertStatus(302);
-        $response->assertRedirect('/');
-        $response = $this->get('/admin/dashboard');
-        $response->assertStatus(302);
         $this->flushSession();
     }
 
     public function testHasManyLogins()
     {
         $this->startSession();
+        $this->app['session']->setPreviousUrl('/admin');
 
         /** @var Admin $admin */
         $admin = factory(Admin::class)->create();
 
-        /** @var string baseUrl */
-        $this->baseUrl = "http://vof.local";
-
-        for($i = 0; $i < 3; $i++){
+        for($i = 0; $i < 5; $i++){
             $response = $this->post('/admin', [
                 'email' => $admin->email,
                 'password' => 'secfret',
@@ -204,8 +178,70 @@ class LoginTest extends TestCase
         ], [
             'content-type' => 'multipart/form-data',
         ]);
+        $response = $this->followRedirects($response);
 
-        $response->assertStatus(429);
+        $response->assertStatus(200);
+        $response->assertSee('Too many login attempts. Please try again in');
+        $this->flushSession();
+    }
+
+    /**
+     * @test
+     */
+    public function testUserLoginUnsuccessfully(): void
+    {
+        $this->startSession();
+
+        /** @var User $admin */
+        $user = factory(User::class)->create();
+
+        $this->app['session']->setPreviousUrl('/login');
+
+        /** @var TestResponse $response */
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'secret',
+            '_token' => $this->app['session']->token(),
+        ], [
+            'content-type' => 'multipart/form-data',
+        ]);
+        $response = $this->followRedirects($response);
+
+        $response->assertStatus(200);
+        $response->assertSee('These credentials do not match our records.');
+
+        $this->flushSession();
+    }
+
+    /**
+     * @test
+     */
+    public function testUserLoginSuccessfully(): void
+    {
+        $this->startSession();
+
+        /** @var User $admin */
+        $user = factory(User::class)->create();
+
+        $this->app['session']->setPreviousUrl('/login');
+
+        /** @var TestResponse $response */
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+            '_token' => $this->app['session']->token(),
+        ], [
+            'content-type' => 'multipart/form-data',
+        ]);
+        $response = $this->followRedirects($response);
+
+        $response->assertStatus(200);
+        $response->assertSee('You are logged in!');
+
+        $response = $this->get('/login');
+        $response = $this->followRedirects($response);
+        $response->assertStatus(200);
+
         $this->flushSession();
     }
 }
