@@ -71,11 +71,21 @@
                         <span>@lang('admin::admin.sidebar.menu.menu-invoices')</span>
                     </a>
                 </li>
-                <li>
+                <li class="sidebar-dropdown">
                     <a href="#">
                         <i class="fa fa-archive"></i>
-                        <span>@lang('admin::admin.sidebar.menu.menu-products')</span>
+                        <span>@lang('admin::admin.sidebar.menu.menu-catalog')</span>
                     </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li>
+                                <a href="#">@lang('admin::admin.sidebar.menu.menu-products')</a>
+                            </li>
+                            <li>
+                                <a href="#">@lang('admin::admin.sidebar.menu.menu-categorys')</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li>
                     <a href="#">

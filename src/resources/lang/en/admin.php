@@ -16,6 +16,8 @@ return [
             'menu-customers' => 'Customers',
             'menu-invoices' => 'Invoices',
             'menu-products' => 'Products',
+            'menu-catalog' => 'Catalog',
+            'menu-categorys' => 'Categorys',
             'menu-vouchers' => 'Vouchers',
             'menu-usermanagment' => 'Usermanagment',
             'menu-payments' => 'Payments'
