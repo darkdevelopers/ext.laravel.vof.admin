@@ -82,7 +82,7 @@
                                 <a href="#">@lang('admin::admin.sidebar.menu.menu-products')</a>
                             </li>
                             <li>
-                                <a href="#">@lang('admin::admin.sidebar.menu.menu-categorys')</a>
+                                <a href="{{ route('category') }}">@lang('admin::admin.sidebar.menu.menu-categorys')</a>
                             </li>
                         </ul>
                     </div>
